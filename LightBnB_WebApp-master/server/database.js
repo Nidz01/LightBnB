@@ -20,6 +20,37 @@ const getAllProperties = function(options, limit = 10) {
   .then(res => res.rows);
 }
 
+////////////*****   USER RELATED QUERIES    ******/////////////
+
+// QUERY 1: Get User with email address.
+
+const getUserWithEmail = function(email) {
+  return pool.query(`
+  SELECT * FROM users
+    WHERE email = $1; 
+`, [email])
+.then(res => res.rows[0]);
+};
+
+// QUERY 2: Get User with Id.
+
+const getUserWithId = function(id) {
+  return pool.query(`
+  SELECT * FROM users
+    WHERE id = $1; 
+`, [id])
+.then(res => res.rows[0]);
+};
+
+// QUERY 3: Add a new user.
+
+const addUser =  function(user) {
+  return pool.query(`
+  INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING *;`
+  , [user.name, user.email, user.password])
+  .then(res => res.rows[0]);
+};
+
 /*
 const properties = require('./json/properties.json');
 const users = require('./json/users.json');
@@ -101,11 +132,12 @@ const addProperty = function(property) {
   return Promise.resolve(property);
 }
 
-exports.getUserWithId = getUserWithId;
-exports.addUser = addUser;
+
 exports.getAllReservations = getAllReservations;
 exports.addProperty = addProperty;
 exports.getAllProperties = getAllProperties;
 */
 exports.getAllProperties = getAllProperties;
 exports.getUserWithEmail = getUserWithEmail;
+exports.getUserWithId = getUserWithId;
+exports.addUser = addUser;

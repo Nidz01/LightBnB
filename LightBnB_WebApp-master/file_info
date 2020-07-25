@@ -1,0 +1,20 @@
+public 
+
+contains all of the HTML, CSS, and client side JavaScript. We're not really interested in that right now.
+
+sass 
+
+contains all of the sass files. Again, not really interesting right now.
+
+
+server 
+
+contains all of the server side code. This is where we will be writing the database queries.
+
+INSIDE SERVER DIRECTORY:
+
+server.js is the entry point to the application. This connects the routes to the database.
+apiRoutes.js and userRoutes.js are responsible for any HTTP requests to /users/something or /api/something.
+json is a directory that contains a bunch of dummy data in .json files.
+database.js is responsible for all queries to the database. It doesn't currently connect to any database, all it does is return data from .json files.
+We will have to modify the database.js file to have it make queries to our PostgreSQL database instead of JSON files.

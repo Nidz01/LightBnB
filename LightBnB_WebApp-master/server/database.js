@@ -129,13 +129,53 @@ const getAllProperties = function(options, limit = 10) {
 
   // 6
   return pool.query(queryString, queryParams).then(res => res.rows);
-}
+};
+
+// Query 2: Add a property or create lisitng.
+
+const addProperty = function(property) {
+  return pool.query(
+    `
+    insert into properties (owner_id,
+      title,
+      description,
+      thumbnail_photo_url,
+      cover_photo_url,
+      cost_per_night,
+      street,
+      city,
+      province,
+      post_code,
+      country,
+      parking_spaces,
+      number_of_bathrooms,
+      number_of_bedrooms) values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING *
+    `,
+    [
+      property.owner_id,
+      property.title,
+      property.description,
+      property.thumbnail_photo_url,
+      property.cover_photo_url,
+      property.cost_per_night,
+      property.street,
+      property.city,
+      property.province,
+      property.post_code,
+      property.country,
+      property.parking_spaces,
+      property.number_of_bathrooms,
+      property.number_of_bedrooms
+    ]
+  );
+};
 
 exports.getUserWithEmail = getUserWithEmail;
 exports.getUserWithId = getUserWithId;
 exports.addUser = addUser;
 exports.getAllReservations = getAllReservations;
 exports.getAllProperties = getAllProperties;
+exports.addProperty = addProperty;
 
 
 
@@ -216,5 +256,4 @@ const addProperty = function(property) {
   properties[propertyId] = property;
   return Promise.resolve(property);
 }
-exports.addProperty = addProperty;
 */
